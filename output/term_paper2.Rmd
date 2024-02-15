@@ -2,7 +2,7 @@
 title: "Money illusion: a replication of the “money illusion” effect in a sample of Brazilian volunteers"
 subtitle: "Replication of the “money illusion” effect in a Brazilian sample"
 author: Pu Yuan/ Yiyi Yao/ Zixi Song
-thanks: "Code and data are available at: https://github.com/scottyuan6/sta302-term-papaer2.git. A replication of various aspects in this paper are available at: DOI 10.17605/OSF.IO/YRQ75
+thanks: "Code and data are available at: https://github.com/scottyuan6/sta302-term-papaer2.git. A replication of various aspects in this paper are available at: https://doi.org/10.17605/OSF.IO/YRQ75."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: "This study aimed to replicate the replication of the money illusion effect within a Brazilian sample[@de2023replication], following the methodology of Shafir, Diamond, and Tversky [@shafir1997money]. It assessed the phenomenon across four scenarios involving financial decisions, with a sample of 372 participants via online platforms. This paper focus on the first two scenarios. The findings closely mirrored the original study's results, showing varying responses based on the framing of financial opportunities (real, or nominal). This replication suggests that the money illusion effect may be culturally uniform, highlighting the importance of further cross-cultural research to deepen our understanding of this cognitive bias."
 output: 

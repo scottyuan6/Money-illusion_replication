@@ -36,5 +36,5 @@ To reproduce the paper, knit to pdf term_paper2.Rmd found at outputs/term_paper2
 
 To replicate a figure, run the corresponding R file stored in paper_2_files/figure-html. The output will be saved as an image.
 
-The replication on the Social Science Reproduction Platform can be found at DOI 10.17605/OSF.IO/YRQ75.
+The replication on the Social Science Reproduction Platform can be found at https://doi.org/10.17605/OSF.IO/YRQ75.
 
