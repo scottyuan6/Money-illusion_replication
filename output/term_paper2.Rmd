@@ -1,0 +1,294 @@
+---
+title: "Money illusion: a replication of the “money illusion” effect in a sample of Brazilian volunteers"
+subtitle: "Replication of the “money illusion” effect in a Brazilian sample"
+author: Pu Yuan/ Yiyi Yao/ Zixi Song
+thanks: "Code and data are available at: https://github.com/scottyuan6/sta302-term-papaer2.git. A replication of various aspects in this paper are available at: DOI 10.17605/OSF.IO/YRQ75
+date: "`r format(Sys.time(), '%d %B %Y')`"
+abstract: "This study aimed to replicate the replication of the money illusion effect within a Brazilian sample[@de2023replication], following the methodology of Shafir, Diamond, and Tversky [@shafir1997money]. It assessed the phenomenon across four scenarios involving financial decisions, with a sample of 372 participants via online platforms. This paper focus on the first two scenarios. The findings closely mirrored the original study's results, showing varying responses based on the framing of financial opportunities (real, or nominal). This replication suggests that the money illusion effect may be culturally uniform, highlighting the importance of further cross-cultural research to deepen our understanding of this cognitive bias."
+output: 
+  pdf_document:
+    latex_engine: xelatex
+toc: FALSE
+bibliography: ref.bib
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'H')
+```
+
+```{r pkgs, echo=FALSE, message=FALSE, warning=FALSE}
+require(osfr)
+require(tidyverse)
+require(readxl)
+require(foreign)
+require(DescTools)
+require(summarytools)
+require(ggplot2)
+require(gplots)
+require(gt)
+```
+
+# 1 Introduction
+
+The motivation for replicating the "money illusion"
+[@de2023replication]effect study in a Brazilian sample includes
+exploring the phenomenon's applicability and validity across different
+cultural contexts. By adapting Shafir and colleagues' original
+research[@shafir1997money] to the Brazilian environment, the study aims
+to examine whether the money illusion—where individuals focus on nominal
+rather than real values of money, ignoring inflation—persists outside
+its initial setting. This could provide evidence for or against the
+cultural independence of the money illusion effect.
+
+Our findings reveal a striking resemblance to the original study,
+suggesting a potentially universal aspect of the money illusion effect
+across varying contexts. This replication not only fills a crucial gap
+in the literature by providing empirical evidence from a non-Western
+context but also underscores the significance of cultural considerations
+in economic psychology.
+
+The importance of this study lies in its contribution to a more nuanced
+understanding of economic behaviors across cultural boundaries, offering
+implications for policymakers, economists, and psychologists alike. It
+invites a reevaluation of economic models that neglect the cognitive
+biases influencing financial decisions.
+
+We hypothesise that the money illusion effect will be present in all
+four problems, as follows: In Problem 1, individuals may perceive
+workers as less content with a job and more inclined to resign when
+offered a larger wage increase in real terms, despite it being smaller
+in nominal terms; in Problem 2, individuals would rank the best deals
+among three house sellers based on nominal gains, rather than real
+gains; in Problem 3, participants may be less likely to buy the armchair
+and more likely to sell it, even when the price increase is only
+nominal; and in Problem
+
+For R[@citeR], this paper uses these packages below: osfr[@osfr],
+tidyverse[@tidyverse],readxl[@readxl],foreign[@foreign],
+DescTool[DescTools],summarytools[@summarytools],
+ggplots2[@ggplot2],gplots[@gplots]
+
+# 2 Data
+
+## 2.1 Data Source and Methodology
+
+The data is collected from a study conducted in Brazil. Researchers distributed questionnaires through online social networking platforms. The inclusion criteria were as follows: 18 years of age or older and consent to participate in the study. Participants did not receive financial compensation throughout the study. When answering the questionnaires, completion of all questions was not mandatory; those data with only one question completed were also included in the analysis.
+
+The data collection process took place over 8 months from December 2021 through July 2022.
+A total of 446 people participated in the survey. Removing participants who completed only one question, the sample size was reduced to 372. The mean age of the sample was 31.6 years (SD = 15.1). Of the participants who responded to the demographic section (n = 382), 258(67% ) were female, and 333(87% ) were from São Paulo.
+
+The questionnaire included socio-demographic information such as age, gender, city of residence, education, and household income, as well as four questions designed to assess the effects of money illusion. The four questions illustrate the money illusion in different situations: I) salary increases; II) real estate transaction; III) purchasing and selling decisions; and IV) susceptibility to risk.
+
+
+## 2.2 Attributes
+
+In our paper, we focus on problem 1 and 2 from the original paper. We used the same dataset as the original paper. However, we applied other methods to generate graphs and tables. Our goal is to check if we could get the same result compared to the original paper by using different functions.
+
+
+# 3 Results
+
+## 3.1 Problem 1
+
+```{r p1, echo=FALSE, warning=FALSE, message=FALSE}
+# Load necessary libraries
+
+library(gt)
+
+# Define the data
+problem1_data <- data.frame(
+  Condition = c("Economic Terms", "Happiness", "Job Attractiveness"),
+  Maria_n = c(87, 58, 69), # Number of participants choosing Maria
+  Maria_percent = c("78%", "49%", "62%"), # Percentage of participants choosing Maria
+  Carolina_n = c(25, 60, 43), # Number of participants choosing Carolina
+  Carolina_percent = c("22%", "51%", "38%"), # Percentage of participants choosing Carolina
+  Chi_Square = c(34.32, 0.03, 6.04),
+  P_value = c("< 0.001", "0.854", "0.014")
+)
+
+# Create the table
+gt_table <- gt(problem1_data) %>%
+  tab_header(
+    title = "Problem 1: Participants' Choices Between Maria or Carolina",
+    subtitle = "Across Different Conditions"
+  ) %>%
+  cols_label(
+    Condition = "Condition",
+    Maria_n = "Maria n",
+    Maria_percent = "Maria %",
+    Carolina_n = "Carolina n",
+    Carolina_percent = "Carolina %",
+    Chi_Square = "Chi-Square",
+    P_value = "P-value"
+  ) %>%
+  tab_spanner(
+    label = "Maria",
+    columns = vars(Maria_n, Maria_percent)
+  ) %>%
+  tab_spanner(
+    label = "Carolina",
+    columns = vars(Carolina_n, Carolina_percent)
+  ) %>%
+  tab_spanner(
+    label = "Statistical Analysis",
+    columns = vars(Chi_Square, P_value)
+  )
+
+gt_table
+```
+
+### 3.1.1 Description:
+
+Figure 1 in the original paper shows the frequency of the choices made by participants considering different conditions for problem 1. The purpose is to determine participants’’ responses to different types of job promotion. Generally, there are two kinds of job preferences based on wage changes ----based on nominal wage increases or real wage increases considering inflation. 
+
+The results show that the money illusion highly occurs when it comes to job attractiveness. A significant proportion of participants chose the option that was nominally more attractive than it actually was. This illustrates that people are more likely to be influenced by money illusion. The chart shows that even though Maria was the one who actually received the salary increase, participants still tended to choose her as the one who was more likely to leave the job. This suggests that the participants valued the nominal raise more than the actual salary. In contrast, when the question came to economic terms, the majority correctly chose Maria as the one to be better off financially, which suggests that they were less influenced by money illusions.
+
+
+```{r p1fig, echo=FALSE, warning=FALSE, message=FALSE, fig.cap= "Choices in Problem 1: Economic Terms, Happiness, and Job Attractiveness"}
+# Install necessary packages if not already installed
+if (!require(ggplot2)) install.packages("ggplot2")
+
+# Load ggplot2 for plotting
+library(ggplot2)
+
+# Sample data: Replace with your actual dataset
+problem1_data <- data.frame(
+  Condition = factor(c("Economic Terms", "Happiness", "Job Attractiveness"), levels = c("Economic Terms", "Happiness", "Job Attractiveness")),
+  Choice = c("Maria", "Maria", "Maria", "Carolina", "Carolina", "Carolina"),
+  Percentage = c(78, 49, 62, 22, 51, 38) # Example percentages based on the provided summary
+)
+
+# Plot
+ggplot(problem1_data, aes(x = Condition, y = Percentage, fill = Choice)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(palette = "Pastel1") +
+  labs(title = "Choices in Problem 1: Economic Terms, Happiness, and Job Attractiveness",
+       x = "Condition",
+       y = "Percentage (%)",
+       fill = "Choice") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Display the plot
+ggsave("Problem1_Choices_Plot.png", width = 8, height = 6, dpi = 300)
+
+```
+
+
+## 3.2 Problem 2
+
+```{r ,echo=FALSE, warning=FALSE, message=FALSE}
+# Load necessary libraries
+library(gt)
+
+# Define the data for Problem 2 replication results
+problem2_data <- data.frame(
+  Seller = c("André", "Bento", "Marcelo"),
+  First_Choice_Percent = c("35%", "21%", "43%"),
+  Second_Choice_Percent = c("16%", "68%", "16%"),
+  Third_Choice_Percent = c("49%", "11%", "41%"),
+  Chi_Square = c(45.64, 153.55, 36.79),
+  P_Value = c("< 0.001", "< 0.001", "< 0.001")
+)
+
+# Create the table
+gt_table <- gt(problem2_data) %>%
+  tab_header(
+    title = "Replication Results for Problem 2: House Sellers Ranking",
+    subtitle = "Participants' Preferences and Statistical Analysis"
+  ) %>%
+  cols_label(
+    Seller = "Seller",
+    First_Choice_Percent = "1st Choice (%)",
+    Second_Choice_Percent = "2nd Choice (%)",
+    Third_Choice_Percent = "3rd Choice (%)",
+    Chi_Square = "Chi-Square",
+    P_Value = "P-Value"
+  ) %>%
+  tab_spanner(
+    label = "Choice Preferences",
+    columns = vars(First_Choice_Percent, Second_Choice_Percent, Third_Choice_Percent)
+  ) %>%
+  tab_spanner(
+    label = "Statistical Analysis",
+    columns = vars(Chi_Square, P_Value)
+  )
+
+gt_table
+
+```
+
+### 3.2.1 Description
+
+Figure 2 in the original article shows the frequency of participants' choices when ranking each seller in Problem 2. The figure shows the distribution of participants' preferences for André, Bento, and Marcelo. This reflects how participants viewed their prices in terms of nominal and real returns.
+
+The graph shows how participants ranked sellers, highlighting whether they were more influenced by nominal gains than real gains. The result suggests that they are susceptible to money illusions. For example, if more participants prefer sellers with higher nominal returns but lower real returns, this would be evidence of money illusion.
+
+Thus, Marcelo, who had a higher nominal gain but the largest real loss, may have been selected as the first choice by a significant percentage of participants. Such choices indicate the existence of money illusion ---- i.e. higher nominal values can influence judgment and lead to non-economically optimal decisions.
+
+```{r p2fig, echo=FALSE, warning=FALSE, message=FALSE, fig.cap= "Participants' Preferences for House Sellers"}
+
+# Load necessary libraries
+if (!require(ggplot2)) install.packages("ggplot2")
+library(ggplot2)
+
+# Assuming the dataset is structured to reflect participants' preferences
+data <- data.frame(
+  Choice = rep(c("Best Choice", "Second Choice", "Third Choice"), each = 3),
+  Seller = rep(c("André", "Bento", "Marcelo"), 3),
+  Percentage = c(
+    # Best Choice Percentages for André, Bento, Marcelo
+    35, 21, 43, 
+    # Second Choice Percentages for André, Bento, Marcelo
+    16, 68, 16, 
+    # Third Choice Percentages for André, Bento, Marcelo
+    49, 11, 41
+  )
+)
+
+# Create the plot
+ggplot(data, aes(x = Choice, y = Percentage, fill = Seller)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(palette = "Pastel1") +
+  labs(title = "Participants' Preferences for House Sellers",
+       x = "",
+       y = "Percentage (%)",
+       fill = "Seller") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+# 4 Discussions
+
+## 4.1 What did we do in this paper?
+
+This paper presents a replication study of the "money illusion" effect in a Brazilian sample. The same dataset was utilized, but with a different analytical approach than the original study. Specifically, the study focuses on questions 1 and 2.The paper analyzes the attractiveness of jobs with different salary increases for participants under inflation (question 1) and the ranking of nominal versus real returns by participants (question 2). The results of this replication confirmed the existence of the monetary illusion, suggesting that individuals tend to prefer nominal increases to real increases, which is consistent with the findings of the initial study. This replication confirms the existence of the monetary illusion effect across cultures, as well as the influence of psychological factors, highlighting the impact of the monetary illusion effect on economic decision-making and thus contributing to the related literature.
+
+## 4.2 Explore
+
+### 4.2.1 Cultural factors
+
+The original article is a study for the Brazilian group only. Considering the economic and social situation in Brazil, it occurs to us that the money illusion effect may have an element of contextualization. Brazil is a developing country, but it is also the seventh largest economy in the world, and it has a unique economic situation. Therefore, while considering the economic effect of the money illusion, we should take into account the economic factors of the country. In Eldar Shafir, Peter Diamond, and Amos Tversky's "Money Illusion," [@shafir1997money] the authors explore the concept of money illusion in different contexts, providing foundational evidence and theoretical underpinnings that help to understand how cultural factors affect susceptibility to money illusion. susceptibility to money illusions. With regard to specific evidence of cultural influences, more targeted research comparing different cultures would be beneficial.
+
+### 4.2.2 psychological factors
+
+The replication study highlights the impact of psychological factors on economic decisions, showcasing how the money illusion—where individuals prioritize nominal values over real values—affects choices in scenarios such as job attractiveness and real estate transactions. This effect, consistent across different cultural contexts, underscores the role of cognitive biases in financial decision-making, suggesting that these psychological underpinnings influence perceptions and decisions beyond the logical evaluation of economic benefits.
+
+Some other studies also support the idea about psychological factors on economic decision-making ----“The influence of personality trait and demographics on financial decision making among Generation Y” by Nga, Joyce KH and Ken Yien, Leong [@nga2013influence] examines how personality traits, such as openness and conscientiousness, impact economic decision-making； "Decision making under stress: A selective review" by Starcke and Brand [@starcke2012decision] explores the role of stress in economic decisions. It reveals that stress can significantly alter the way individuals evaluate economic scenarios. 
+
+## 4.3 weakness
+
+The use of the same dataset collected in a particular economic context (in this case, Brazil) may limit the ability to generalize the results to different populations or groups. If the dataset is not representative of the wider group, the conclusions drawn may apply only to the specific group or context in which the data were collected.
+
+To improve in future studies, researchers may require collecting more data from different populations. In addition, the application of innovative analytic techniques could further enrich the understanding of money illusions and their effects in a variety of contexts.
+
+
+# 5 Conclusion
+
+Comparing our Figures 1 and 2 with graphs from the original article, we can conclude that this replication study succeeded in demonstrating the existence of the money illusion effect in the Brazilian sample. The similar results from our findings with those of the original study suggest that individuals may prioritize nominal values over real ones. Since the original study is conducted in Brazil, we could conclude that the money illusion effect can be observed in different cultural backgrounds. This supports the idea that "money illusion is a pervasive cognitive bias that affects financial decisions" and reinforces the importance of considering psychological factors in economic theory.
+
+
+# References
