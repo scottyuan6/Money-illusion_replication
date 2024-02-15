@@ -8,6 +8,8 @@ inputs
 - data_clean - contains data clean functions.
 - moneydataABCDEF.xlsx - original datasat.
 - moneydataABCDEF_cleaned.xlsx - cleaned original dataset.
+- literature
+ - Preprint_Replication of the “money illusion” effect in a Brazilian sample (1) - the original paper
 
 outputs
 - term_paper2.pdf - the reproduction paper
